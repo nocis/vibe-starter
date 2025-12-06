@@ -1,8 +1,7 @@
-#!/bin/sh
+#!/bin/bash
 
 # need to create config file via this instead of mannually to avoid claude inside container cannot write
-chmod -R +w /root/.claude
-ln -s /root/.claude/.claude.json /root/.claude.json
+ln -sf ~/.claude/.claude.json ~/.claude.json
 
 # Create the link dynamically at runtime
 # -s = symbolic, -f = force (overwrite if exists)

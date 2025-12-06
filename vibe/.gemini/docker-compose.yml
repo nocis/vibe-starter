@@ -1,10 +1,11 @@
-volumes:
-  gemini-config:
-
 services:
   gemini-cli-node:
     build:
       context: .
+      args:
+        USER_ID: "${UID:-1000}"
+        GROUP_ID: "${GID:-1000}"
+        USERNAME: "gemini"
       dockerfile: ./sandbox.Dockerfile
 
     container_name: gemini-cli-node
@@ -13,7 +14,7 @@ services:
     volumes:
       - ../../:/app
       # Mount the named volume to persist the CLI's configuration
-      - ./gemini-config:/root/.gemini
+      - ./gemini-config:/home/gemini/.gemini
 
     # Set the working directory inside the container to your mounted codebase
     working_dir: /app

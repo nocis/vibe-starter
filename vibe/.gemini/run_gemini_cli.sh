@@ -1,6 +1,13 @@
 #!/bin/bash
+echo "Setting up Gemini CLI Docker environment..."
 cd "$(dirname "$0")" || exit
+
 mkdir ./gemini-config
-sudo chmod -R +rwx ./gemini-config
-docker compose -f docker-compose.yml run --build --rm gemini-cli-node gemini
+#
+
+# run command with matched user
+docker compose -f docker-compose.yml run --build --rm \
+    --user "$(id -u):$(id -g)" \
+    gemini-cli-node gemini
+
 rm -f ../../GEMINI.md

@@ -1,8 +1,8 @@
 #!/bin/sh
 
-# need to create config file via this instead of mannually to avoid gemini inside container cannot write
-chmod -R +w /root/.gemini
-
+#
+#
+#
 # Create the link dynamically at runtime
 # -s = symbolic, -f = force (overwrite if exists)
 ln -sf /app/vibe/.gemini/GEMINI.md /app/GEMINI.md

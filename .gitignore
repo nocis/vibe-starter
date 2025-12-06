@@ -21,3 +21,6 @@ tmp/
 # Gemini specific
 gemini-config
 claude-config
+
+/GEMINI.md
+/CLAUDE.md

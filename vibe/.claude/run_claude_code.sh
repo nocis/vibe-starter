@@ -1,7 +1,13 @@
 #!/bin/bash
+echo "Setting up Claude CLI Docker environment..."
 cd "$(dirname "$0")" || exit
+
 mkdir ./claude-config
-sudo touch ./claude-config/.claude.json
-sudo chmod -R +rwx ./claude-config
-docker compose -f docker-compose.yml run --build --rm claude-cli-node claude
+touch ./claude-config/.claude.json
+
+# run command with matched user
+docker compose -f docker-compose.yml run --build --rm \
+    --user "$(id -u):$(id -g)" \
+    claude-cli-node claude
+
 rm -f ../../CLAUDE.md

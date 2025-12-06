@@ -1,10 +1,11 @@
-volumes:
-  claude-config:
-
 services:
   claude-cli-node:
     build:
       context: .
+      args:
+        USER_ID: "${UID:-1000}"
+        GROUP_ID: "${GID:-1000}"
+        USERNAME: "claude"
       dockerfile: ./sandbox.Dockerfile
 
     container_name: claude-cli-node
@@ -13,7 +14,7 @@ services:
     volumes:
       - ../../:/app
       # Mount the named volume to persist the CLI's configuration
-      - ./claude-config:/root/.claude
+      - ./claude-config:/home/claude/.claude
 
     # Set the working directory inside the container to your mounted codebase
     working_dir: /app
