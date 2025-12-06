@@ -18,3 +18,13 @@ RUN mkdir -p /root/.config && curl -sS https://raw.githubusercontent.com/nocis/a
 # Initialize starship in .bashrc for root user
 RUN echo 'eval "$(starship init bash)"' >> /root/.bashrc
 
+
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+
+# Make it executable
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+# Set the entrypoint
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+
+
