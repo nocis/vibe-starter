@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "gemini": "./vibe/.gemini/run_gemini_cli.sh",
-    "claude": "./vibe/.claude/run_claude_code.sh"
+    "gemini": "./.vibe/.gemini/run_gemini_cli.sh",
+    "claude": "./.vibe/.claude/run_claude_code.sh"
   },
   "dependencies": {},
   "devDependencies": {
