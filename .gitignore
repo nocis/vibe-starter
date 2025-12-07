@@ -1,12 +1,3 @@
-# Node.js
-node_modules/
-npm-debug.log
-yarn-debug.log
-yarn-error.log
-
-# Dependency lock files
-yarn.lock
-
 # Editor directories and files
 .idea/
 .vscode/
@@ -18,9 +9,12 @@ build/
 dist/
 tmp/
 
-# Gemini specific
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+yarn.lock
 gemini-config
 claude-config
-
 /GEMINI.md
 /CLAUDE.md
