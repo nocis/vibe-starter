@@ -16,5 +16,10 @@ yarn-error.log
 yarn.lock
 gemini-config
 claude-config
+opencode-state
+opencode-config-local
+opencode-config.jsonc
 /GEMINI.md
 /CLAUDE.md
+/AGENTS.md
+/.opencode

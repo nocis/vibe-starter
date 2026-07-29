@@ -1,0 +1,43 @@
+services:
+  opencode-cli-node:
+    build:
+      context: .
+      args:
+        USER_ID: "${UID:-1000}"
+        GROUP_ID: "${GID:-1000}"
+        USERNAME: "opencode"
+      dockerfile: ./sandbox.Dockerfile
+
+    container_name: opencode-cli-node
+
+    # Mount your current codebase into the container
+    volumes:
+      - ../../:/app
+      # Mount the named volume to persist the CLI's configuration
+      # - ./opencode-config.jsonc:/home/opencode/.config/opencode/opencode.jsonc
+      - ./opencode-state:/home/opencode/.local/state/opencode
+      # - ./config/kv.json:/home/opencode/.local/state/opencode/kv.json
+      # - ./config/model.json:/home/opencode/.local/state/opencode/model.json
+
+    # Set the working directory inside the container to your mounted codebase
+    working_dir: /app
+
+    # Keep the container running in interactive mode
+    stdin_open: true
+    tty: true
+
+    # Command to run on container startup. This will drop you into a shell
+    # inside the container, from where you can then run `opencode`.
+    command: /bin/bash
+
+    # Environment variable for your Google API Key (if you're not using personal account login)
+    # Replace 'YOUR_opencode_API_KEY' with your actual key
+    ports:
+      - "${OPENCODE_HOST_PORT:-64820}:${OPENCODE_PORT:-4096}"
+
+    environment:
+      - opencode_API_KEY=${opencode_API_KEY}
+      - TERM=xterm-256color
+      - EDITOR=nvim
+      - OPENCODE_HOST_PORT=64820
+      - OPENCODE_PORT=4096
