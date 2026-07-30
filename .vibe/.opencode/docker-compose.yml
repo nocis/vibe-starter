@@ -16,6 +16,7 @@ services:
       # Mount the named volume to persist the CLI's configuration
       # - ./opencode-config.jsonc:/home/opencode/.config/opencode/opencode.jsonc
       - ./opencode-state:/home/opencode/.local/state/opencode
+      - ./opencode-share:/home/opencode/.local/share/opencode
       # - ./config/kv.json:/home/opencode/.local/state/opencode/kv.json
       # - ./config/model.json:/home/opencode/.local/state/opencode/model.json
 

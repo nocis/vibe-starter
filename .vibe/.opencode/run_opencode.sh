@@ -3,6 +3,7 @@ echo "Setting up opencode CLI Docker environment..."
 cd "$(dirname "$0")" || exit
 
 mkdir ./opencode-state
+mkdir ./opencode-share
 mkdir ./opencode-config-local
 # touch ./opencode-config.jsonc
 
