@@ -1,0 +1,40 @@
+services:
+  feynman-cli-node:
+    build:
+      context: .
+      args:
+        USER_ID: "${UID:-1000}"
+        GROUP_ID: "${GID:-1000}"
+        USERNAME: "feynman"
+      dockerfile: ./sandbox.Dockerfile
+
+    container_name: feynman-cli-node
+
+    # Mount your current codebase into the container
+    volumes:
+      - ../../:/app
+      # Mount the named volume to persist the CLI's configuration
+      - ./feynman-config:/home/feynman/.feynman
+
+    # Set the working directory inside the container to your mounted codebase
+    working_dir: /app
+
+    # Keep the container running in interactive mode
+    stdin_open: true
+    tty: true
+
+    # Command to run on container startup. This will drop you into a shell
+    # inside the container, from where you can then run `feynman`.
+    command: /bin/bash
+
+    # Environment variable for your Google API Key (if you're not using personal account login)
+    # Replace 'YOUR_feynman_API_KEY' with your actual key
+
+    ports:
+      - "${FEYNMAN_HOST_PORT:-6174}:${FEYNMAN_PORT:-6174}"
+
+    environment:
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - TERM=xterm-256color
+      - FEYNMAN_HOST_PORT=6174
+      - FEYNMAN_PORT=6174

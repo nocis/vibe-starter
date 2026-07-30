@@ -5,7 +5,8 @@
   "scripts": {
     "gemini": "./.vibe/.gemini/run_gemini_cli.sh",
     "claude": "./.vibe/.claude/run_claude_code.sh",
-    "opencode": "./.vibe/.opencode/run_opencode.sh"
+    "opencode": "./.vibe/.opencode/run_opencode.sh",
+    "feynman": "./.vibe/.feynman/run_feynman.sh"
   },
   "dependencies": {},
   "devDependencies": {}
