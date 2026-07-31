@@ -1,4 +1,7 @@
 #!/bin/bash
+
+export MY_PWD=$(pwd)
+
 echo "Setting up opencode CLI Docker environment..."
 cd "$(dirname "$0")" || exit
 

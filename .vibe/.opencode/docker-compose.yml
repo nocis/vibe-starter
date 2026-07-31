@@ -6,6 +6,7 @@ services:
         USER_ID: "${UID:-1000}"
         GROUP_ID: "${GID:-1000}"
         USERNAME: "opencode"
+        MY_PWD: "${MY_PWD}"
       dockerfile: ./sandbox.Dockerfile
 
     container_name: opencode-cli-node
@@ -37,7 +38,10 @@ services:
       - "${OPENCODE_HOST_PORT:-64820}:${OPENCODE_PORT:-4096}"
 
     environment:
-      - opencode_API_KEY=${opencode_API_KEY}
+      - MY_PWD=${MY_PWD}
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - GOOGLE_GENERATIVE_AI_API_KEY=${GEMINI_API_KEY}
+      - DEEPSEEK_API_KEY=${DEEPSEEK_API_KEY}
       - TERM=xterm-256color
       - EDITOR=nvim
       - OPENCODE_HOST_PORT=64820

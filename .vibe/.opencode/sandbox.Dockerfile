@@ -4,6 +4,7 @@ FROM node:lts-slim
 ARG USER_ID=1000
 ARG GROUP_ID=1000
 ARG USERNAME=opencode
+ARG MY_PWD
 
 # 1. Install System Dependencies (as root)
 # We do this first to leverage cache and because apt requires root
@@ -30,6 +31,10 @@ RUN userdel -r $(getent passwd 1000 | cut -d: -f1) || true && \
 RUN groupadd -g ${GROUP_ID} ${USERNAME} && \
   useradd -l -u ${USER_ID} -g ${USERNAME} -m -s /bin/bash ${USERNAME}
 
+
+# create mapping link dir for opencode
+RUN mkdir -p "$(dirname "${MY_PWD}")"
+RUN chown ${USERNAME}:${USERNAME} "$(dirname "${MY_PWD}")"
 
 # When you mount a volume the permissions of /app inside the container 
 # are overwritten by the permissions of the folder on your host machine.

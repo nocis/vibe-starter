@@ -9,5 +9,8 @@ ln -sf /app/.vibe/.opencode/config/.opencode/* /app/.opencode/
 # -s = symbolic, -f = force (overwrite if exists)
 ln -sf /app/.vibe/.opencode/AGENTS.md /app/AGENTS.md
 
+# create link to host path for opencode.nvim code piece context
+ln -sf /app "$MY_PWD"
+
 # Execute the main command passed to the container
 exec "$@"
