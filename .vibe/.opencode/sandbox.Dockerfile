@@ -10,6 +10,8 @@ ARG MY_PWD
 # We do this first to leverage cache and because apt requires root
 # rm -rf /var/lib/apt/lists/* reduce container size
 RUN apt-get update && apt-get install -y \
+  ripgrep \
+  fd-find \
   curl \
   bash \
   neovim \
@@ -17,6 +19,8 @@ RUN apt-get update && apt-get install -y \
   python3-dev \
   python3-pip \
   && rm -rf /var/lib/apt/lists/*
+
+RUN ln -s $(which fdfind) /usr/local/bin/fd
 
 # Install starship
 RUN curl -sS https://starship.rs/install.sh | sh -s -- -y
