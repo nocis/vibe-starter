@@ -23,14 +23,5 @@
         "todowrite": "allow"
       }
     }
-  },
-  "mcp": {
-    "context7": {
-      "type": "local",
-      "command": ["npx", "-y", "@upstash/context7-mcp"],
-      "environment": {
-        "DEFAULT_MINIMUM_TOKENS": "6000"
-      }
-    }
   }
 }
