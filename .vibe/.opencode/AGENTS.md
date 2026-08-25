@@ -35,15 +35,15 @@
 - After each edit, briefly summarise what was changed and why.
 - batch very small, non‑interdependent edits into one round if each is clearly delimited and reversible
 
-## 6. Codebase Knowledge via .codebase/
+## 6. Codebase Knowledge via codebase/
 
-To minimise token usage and keep project knowledge reliable across sessions, use the `.codebase/` knowledge system instead of ad-hoc rescanning:
+To minimise token usage and keep project knowledge reliable across sessions, use the `codebase/` knowledge system instead of ad-hoc rescanning:
 
-1. **Before proposing any implementation plan**, invoke the `context-scout` subagent (task tool) to discover which `.codebase/` files are relevant to the task. Load only what it returns — don't preemptively read the whole tree.
-2. **If `.codebase/` doesn't exist yet** for this project, that is not an error. Mention that `/codebase init` is available, but don't run it unprompted — bootstrapping is the user's call.
+1. **Before proposing any implementation plan**, invoke the `context-scout` subagent (task tool) to discover which `codebase/` files are relevant to the task. Load only what it returns — don't preemptively read the whole tree.
+2. **If `codebase/` doesn't exist yet** for this project, that is not an error. Mention that `/codebase init` is available, but don't run it unprompted — bootstrapping is the user's call.
 3. **After a coding task is completed and verified** (build/tests reported to the user), invoke the `context-keeper` subagent with operation `record`, in the background, to log what happened. Do not block on it before continuing.
-4. **Only `context-keeper` may write to `.codebase/**`.** No other agent — including you — edits those files directly.
-5. This replaces the old single-file `CODEBASE.md` protocol. If a stray `CODEBASE.md` exists from before this system, treat `.codebase/` as authoritative and ignore it.
+4. **Only `context-keeper` may write to `codebase/**`.** No other agent — including you — edits those files directly.
+5. This replaces the old single-file `CODEBASE.md` protocol. If a stray `CODEBASE.md` exists from before this system, treat `codebase/` as authoritative and ignore it.
 
 ## Notes
 

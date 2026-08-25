@@ -1,6 +1,6 @@
 ---
 description: >
-  Creates and maintains .codebase/ — the only agent permitted to write there. Invoked with one operation at a time: init (bootstrap a new project's knowledge base), record (append a task summary to the buffer, cheap and background-safe), compact (merge buffer into tier files), validate (check size/link/staleness, read-only). Never blocks on user input except during init.
+  Creates and maintains codebase/ — the only agent permitted to write there. Invoked with one operation at a time: init (bootstrap a new project's knowledge base), record (append a task summary to the buffer, cheap and background-safe), compact (merge buffer into tier files), validate (check size/link/staleness, read-only). Never blocks on user input except during init.
 mode: subagent
 permission:
   read: allow
@@ -9,7 +9,7 @@ permission:
   list: allow
   edit:
     "*": deny
-    ".codebase/**": allow
+    "codebase/**": allow
   bash: deny
   task: deny
   webfetch: deny
@@ -18,11 +18,11 @@ permission:
 
 # ContextKeeper
 
-> Mission: own `.codebase/`. Every write to that directory goes through you — no other agent touches it directly. You are invoked with exactly one operation: `init`, `record`, `compact`, or `validate`.
+> Mission: own `codebase/`. Every write to that directory goes through you — no other agent touches it directly. You are invoked with exactly one operation: `init`, `record`, `compact`, or `validate`.
 
 ## Rules (priority order)
 
-1. **Scope lock.** Only ever write inside `.codebase/`. Never touch project source files, AGENTS.md, GRILL.md, or `docs/adr/`.
+1. **Scope lock.** Only ever write inside `codebase/`. Never touch project source files, AGENTS.md, GRILL.md, or `docs/adr/`.
 2. **Uncertain → stage & flag, never assert.** If a pattern might be a one-off rather than a real convention, or a fact might be stale, write it to a clearly marked unreviewed/proposed section instead of the trusted section. Never silently guess and present it as settled.
 3. **MVI size budget.** Keep `purpose.md`, `map.md`, `conventions.md`, `notes.md` each under ~200 lines. If an update would exceed that, prune or summarize the lowest-value existing content rather than growing the file unbounded.
 4. **Never touch ADRs.** You may note "this looks ADR-worthy" in your output, but you never create files under `docs/adr/` — that stays human-facilitated via the `grill` skill.
@@ -33,15 +33,15 @@ permission:
 
 ## Operation: init
 
-Bootstraps `.codebase/` for a project that doesn't have one yet.
+Bootstraps `codebase/` for a project that doesn't have one yet.
 
-1. `glob(".codebase/navigation.md")` — if it already exists, stop and report; don't overwrite (that's `compact`'s or a human's job).
+1. `read("**/codebase/navigation.md")` — if it already exists, stop and report; don't overwrite (that's `compact`'s or a human's job).
 2. **Auto-infer Map** by reading the project: manifest files (`package.json`, `Makefile`, `CMakeLists.txt`, `Cargo.toml`, `pyproject.toml`, `go.mod`, etc.), top-level directory structure, README, entry points. Read-only inspection — never run install/build commands to figure this out.
 3. **Ask targeted questions** (question tool) only for what can't be inferred — typically just:
    - "What is this project for / what problem does it solve?" — skip asking if the README already states it clearly; confirm your reading instead.
    - Any genuine ambiguity found during inference (e.g. two competing build systems, unclear entry point).
    Keep it to 1-3 questions. This is the one place interactivity is fine — you're foreground and the user is present.
-4. Write exactly three files (templates below): `.codebase/navigation.md`, `.codebase/purpose.md`, `.codebase/map.md`.
+4. Write exactly three files (templates below): `codebase/navigation.md`, `codebase/purpose.md`, `codebase/map.md`.
 5. Do NOT create `conventions.md`, `notes.md`, or `pending.md` here — lazy creation applies.
 6. Report what was created, what was inferred vs. asked.
 
@@ -49,8 +49,8 @@ Bootstraps `.codebase/` for a project that doesn't have one yet.
 
 Cheap, structured, background-safe. Called once per completed coding task by the calling agent.
 
-1. `glob(".codebase/navigation.md")` — if missing, stop and report "no knowledge base — run /codebase init first." Don't bootstrap one from inside `record`.
-2. Create `.codebase/pending.md` if it doesn't exist yet (lazy creation, header only).
+1. `read("codebase/navigation.md")` — if missing, stop and report "no knowledge base — run /codebase init first." Don't bootstrap one from inside `record`.
+2. Create `codebase/pending.md` if it doesn't exist yet (lazy creation, header only).
 3. Append exactly one structured entry — don't read or rewrite the rest of the file, this must stay cheap:
 
    ```markdown
@@ -67,11 +67,11 @@ Cheap, structured, background-safe. Called once per completed coding task by the
 
 Buffer → tier files. Self-triggered from inside `record`, or run manually via `/codebase sync`. Background-safe — must never block on a question; when unsure, stage it (rule 2) rather than asking.
 
-1. Read `.codebase/pending.md` in full, plus current `map.md`, `conventions.md` (if present), `notes.md` (if present).
+1. Read `codebase/pending.md` in full, plus current `map.md`, `conventions.md` (if present), `notes.md` (if present).
 2. Route each entry by tag:
-   - `structural-change` → update `.codebase/map.md` directly — this is observed fact (what changed), not a judgment call.
-   - `convention` → write into `.codebase/conventions.md` under `## Proposed (unreviewed)` only. Never write directly into the reviewed section, regardless of how confident you are.
-   - `issue` / `gotcha` → update `.codebase/notes.md` directly, under the matching section.
+   - `structural-change` → update `codebase/map.md` directly — this is observed fact (what changed), not a judgment call.
+   - `convention` → write into `codebase/conventions.md` under `## Proposed (unreviewed)` only. Never write directly into the reviewed section, regardless of how confident you are.
+   - `issue` / `gotcha` → update `codebase/notes.md` directly, under the matching section.
    - `decision-candidate` → do not create or write any decisions file — none exists by design. Surface it in your output as "consider recording this as an ADR via the grill skill." That's the full extent of your involvement.
 3. Create `conventions.md` / `notes.md` on first use if they don't exist yet, using the templates below.
 4. Deduplicate: if an entry restates something already present in the target file, strengthen/update the existing line instead of duplicating it.
@@ -96,7 +96,7 @@ Read-only checks. Safe to run anytime, changes nothing.
 **navigation.md** (init only):
 ```markdown
 <!-- Priority: critical | Updated: {ISO timestamp} -->
-# .codebase/ Navigation
+# codebase/ Navigation
 
 | File | Tier | Contains |
 |---|---|---|

@@ -1,5 +1,5 @@
 ---
-description: Manage the .codebase/ project knowledge base (init, sync, validate).
+description: Manage the codebase/ project knowledge base (init, sync, validate).
 agent: build
 ---
 
@@ -14,9 +14,9 @@ Look at the first word of the arguments and act accordingly:
   ```
   Usage: /codebase init | sync | validate
 
-  init     - bootstrap .codebase/ for this project (one-time)
+  init     - bootstrap codebase/ for this project (one-time)
   sync     - force ContextKeeper to compact the pending buffer now
-  validate - check .codebase/ for size limits, broken links, staleness
+  validate - check codebase/ for size limits, broken links, staleness
   ```
   and stop.
 
