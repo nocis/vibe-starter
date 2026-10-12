@@ -68,7 +68,7 @@ RUN npm config set prefix ${HOME}/.npm-global
 ENV PATH=${HOME}/.npm-global/bin:${PATH}
 
 # Install opencode CLI
-RUN npm install -g opencode-ai
+RUN npm install -g @opencode/cli
 
 # Configure starship from a URL
 RUN mkdir -p ${HOME}/.config && curl -sS https://raw.githubusercontent.com/nocis/archdots/refs/heads/main/config/starship/pure.toml -o ${HOME}/.config/starship.toml

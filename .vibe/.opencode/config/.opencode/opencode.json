@@ -1,27 +1,23 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "theme": "tokyonight",
-  "permission": {
-    "edit": "ask"
-  },
-  "agent": {
+  "agents": {
     "discover": {
       "description": "Discover mode — research GitHub repos, topics, or URLs and align on intent",
       "mode": "primary",
       "temperature": 0.3,
       "color": "success",
-      "prompt": "{file:./prompts/explore-mode.txt}",
-      "permission": {
-        "read": "allow",
-        "edit": "deny",
-        "bash": "deny",
-        "grep": "allow",
-        "glob": "allow",
-        "webfetch": "allow",
-        "websearch": "allow",
-        "skill": "allow",
-        "todowrite": "allow"
-      }
+      "system": "{file:./prompts/explore-mode.txt}",
+      "permissions": [
+        { "action": "read", "resource": "*", "effect": "allow" },
+        { "action": "edit", "resource": "*", "effect": "deny" },
+        { "action": "bash", "resource": "*", "effect": "deny" },
+        { "action": "grep", "resource": "*", "effect": "allow" },
+        { "action": "glob", "resource": "*", "effect": "allow" },
+        { "action": "webfetch", "resource": "*", "effect": "allow" },
+        { "action": "websearch", "resource": "*", "effect": "allow" },
+        { "action": "skill", "resource": "*", "effect": "allow" },
+        { "action": "todowrite", "resource": "*", "effect": "allow" }
+      ]
     }
   }
 }
